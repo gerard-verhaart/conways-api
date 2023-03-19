@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getAllPosts, addPost } from '../db/db'
+import { getAllPosts, addPost, updatePost } from '../db/db'
 
 const router = Router()
 
@@ -21,6 +21,16 @@ router.post('/', (req, res) => {
     })
     .catch((err) => {
       console.log(err.message)
+    })
+})
+
+router.patch('/:id', (req, res) => {
+  updatePost(Number(req.params.id), req.body)
+    .then((returned) => {
+      res.json(returned[0])
+    })
+    .catch((err: Error) => {
+      res.status(500).send(err.message)
     })
 })
 

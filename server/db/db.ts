@@ -5,13 +5,27 @@ export function getAllPosts(db = connection): Promise<Post[]> {
   return db('posts').select('*', 'date_created AS dateCreated')
 }
 
-export function addPost(newPost: Post, db = connection): Promise<number[]> {
+export function addPost(newPost: Post, db = connection): Promise<Post[]> {
   return db('posts').insert(
     {
-      title: newPost.title,
-      text: newPost.text,
+      ...newPost,
       date_created: Date.now(),
     },
     '*'
   )
+}
+
+export function updatePost(
+  id: number,
+  updatedPost: Post,
+  db = connection
+): Promise<Post[]> {
+  return db('posts')
+    .update({ ...updatedPost }, [
+      'id',
+      'title',
+      'date_created AS dateCreated',
+      'text',
+    ])
+    .where('id', id)
 }
