@@ -4,3 +4,7 @@ export interface Post {
   text: string
   dateCreated?: number
 }
+
+export interface Routeposts extends Post {
+  date_created?: number
+}

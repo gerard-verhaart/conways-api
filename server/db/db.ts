@@ -1,7 +1,7 @@
 import connection from './connection'
-import { Post } from '../../common/post'
+import { Post, Routeposts } from '../../common/post'
 
-export function getAllPosts(db = connection): Promise<Post[]> {
+export function getAllPosts(db = connection): Promise<Routeposts[]> {
   return db('posts').select('*', 'date_created AS dateCreated')
 }
 

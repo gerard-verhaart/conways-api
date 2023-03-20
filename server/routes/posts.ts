@@ -7,12 +7,16 @@ import {
   getCommentsOnPost,
   addComment,
 } from '../db/db'
+import { Routeposts } from '../../common/post'
 
 const router = Router()
 
 router.get('/', (req, res) => {
   getAllPosts()
     .then((posts) => {
+      posts.forEach((post) => {
+        delete post.date_created
+      })
       res.json(posts)
     })
     .catch((err: Error) => res.status(500).send(err.message))
@@ -20,9 +24,9 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   addPost(req.body)
-    .then((addedPost) => {
+    .then(([addedPost]) => {
       res.json(addedPost)
-      console.log(addedPost)
+      // res.redirect(`/${addedPost.id}`)
     })
     .catch((err) => {
       console.log(err.message)
