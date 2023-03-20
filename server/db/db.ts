@@ -38,3 +38,14 @@ export function deletePost(id: number, db = connection): Promise<number> {
       return db('posts').del().where('id', id)
     })
 }
+
+export function getCommentsOnPost(
+  parentPostId: number,
+  db = connection
+): Promise<Comment[]> {
+  return db('comments')
+    .select('id', 'post_id AS postId', 'date_posted AS datePosted', 'comment')
+    .where('post_id', parentPostId)
+}
+
+// addComment

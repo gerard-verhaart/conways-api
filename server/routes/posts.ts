@@ -1,5 +1,12 @@
 import { Router } from 'express'
-import { getAllPosts, addPost, updatePost, deletePost } from '../db/db'
+import {
+  getAllPosts,
+  addPost,
+  updatePost,
+  deletePost,
+  getCommentsOnPost,
+  addComment,
+} from '../db/db'
 
 const router = Router()
 
@@ -38,6 +45,25 @@ router.delete('/:id', (req, res) => {
       res.sendStatus(200)
     })
     .catch((err: Error) => res.status(500).send(err.message))
+})
+
+router.get('/:postId/comments', (req, res) => {
+  getCommentsOnPost(Number(req.params.postId))
+    .then((comments) => {
+      res.json(comments)
+    })
+    .catch((err: Error) => res.status(500).send(err.message))
+})
+
+router.post('/:postId/comments', (req, res) => {
+  addComment(req.body)
+    .then((addedComment) => {
+      res.json(addedComment)
+      console.log(addedComment)
+    })
+    .catch((err) => {
+      console.log(err.message)
+    })
 })
 
 export default router
