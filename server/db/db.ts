@@ -72,3 +72,7 @@ export function updateComment(
     ])
     .where('id', id)
 }
+
+export function deleteComment(id: number, db = connection): Promise<number> {
+  return db('comments').del().where('id', id)
+}
