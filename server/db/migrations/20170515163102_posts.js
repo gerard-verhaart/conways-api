@@ -4,6 +4,7 @@ exports.up = (knex) => {
     table.string('title')
     table.date('date_created')
     table.string('text')
+    // table.timestamp('created_at').defaultTo(knex.fn.now())
   })
 }
 

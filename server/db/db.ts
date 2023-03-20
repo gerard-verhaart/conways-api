@@ -40,12 +40,20 @@ export function deletePost(id: number, db = connection): Promise<number> {
 }
 
 export function getCommentsOnPost(
-  parentPostId: number,
+  postId: number,
   db = connection
 ): Promise<Comment[]> {
   return db('comments')
     .select('id', 'post_id AS postId', 'date_posted AS datePosted', 'comment')
-    .where('post_id', parentPostId)
+    .where('post_id', postId)
 }
 
-// addComment
+export function addComment(
+  postId: number,
+  addedComment: Comment,
+  db = connection
+): Promise<Comment[]> {
+  return db('comments')
+    .insert({ ...addedComment, post_id: postId, date_posted: Date.now() }, '*')
+    .where('post_id', postId)
+}

@@ -4,6 +4,7 @@ exports.up = (knex) => {
     table.integer('post_id').references('Posts.id')
     table.date('date_posted')
     table.string('comment')
+    // table.timestamp('created_at').defaultTo(knex.fn.now())
   })
 }
 

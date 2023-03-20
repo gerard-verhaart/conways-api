@@ -56,10 +56,9 @@ router.get('/:postId/comments', (req, res) => {
 })
 
 router.post('/:postId/comments', (req, res) => {
-  addComment(req.body)
-    .then((addedComment) => {
+  addComment(Number(req.params.postId), req.body)
+    .then(([addedComment]) => {
       res.json(addedComment)
-      console.log(addedComment)
     })
     .catch((err) => {
       console.log(err.message)
