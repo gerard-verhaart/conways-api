@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getAllPosts, addPost, updatePost } from '../db/db'
+import { getAllPosts, addPost, updatePost, deletePost } from '../db/db'
 
 const router = Router()
 
@@ -8,9 +8,7 @@ router.get('/', (req, res) => {
     .then((posts) => {
       res.json(posts)
     })
-    .catch((err: Error) => {
-      res.status(500).send(err.message)
-    })
+    .catch((err: Error) => res.status(500).send(err.message))
 })
 
 router.post('/', (req, res) => {
@@ -32,6 +30,14 @@ router.patch('/:id', (req, res) => {
     .catch((err: Error) => {
       res.status(500).send(err.message)
     })
+})
+
+router.delete('/:id', (req, res) => {
+  deletePost(Number(req.params.id))
+    .then(() => {
+      res.sendStatus(200)
+    })
+    .catch((err: Error) => res.status(500).send(err.message))
 })
 
 export default router

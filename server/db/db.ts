@@ -29,3 +29,12 @@ export function updatePost(
     ])
     .where('id', id)
 }
+
+export function deletePost(id: number, db = connection): Promise<number> {
+  return db('comments')
+    .del()
+    .where('post_id', id)
+    .then(() => {
+      return db('posts').del().where('id', id)
+    })
+}
