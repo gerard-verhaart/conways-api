@@ -57,3 +57,18 @@ export function addComment(
     .insert({ ...addedComment, post_id: postId, date_posted: Date.now() }, '*')
     .where('post_id', postId)
 }
+
+export function updateComment(
+  id: number,
+  updatedComment: Comment,
+  db = connection
+): Promise<Comment[]> {
+  return db('comments')
+    .update({ ...updatedComment }, [
+      'id',
+      'post_id AS postId',
+      'date_posted AS datePosted',
+      'comment',
+    ])
+    .where('id', id)
+}
